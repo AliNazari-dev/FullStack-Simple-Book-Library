@@ -1,10 +1,22 @@
 import express from "express";
-import { PORT } from "./config.js";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
 const app = express();
-app.listen(PORT, () => {
-  console.log(`App is Listening to port : ${PORT}`);
-});
+dotenv.config();
+const port = process.env.PORT || 5000;
+
+mongoose
+  .connect(process.env.MONGO)
+  .then(() => {
+    console.log("APP connected to Mongo");
+    app.listen(port, () => {
+      console.log(`App is Listening to port : ${port}`);
+    });
+  })
+  .catch((error) => {
+    console.log(console.log(error));
+  });
 
 app.get("/", (req, res) => {
   console.log(req);

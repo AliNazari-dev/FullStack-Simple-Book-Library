@@ -8,11 +8,15 @@ const app = express();
 //Middleware for parcing request body
 app.use(express.json());
 
-
 dotenv.config();
 const port = process.env.PORT || 5000;
 
-//Route
+//Routes
+app.get("/", (req, res) => {
+  console.log(req);
+  return res.status(234).send("WElCOM to my Project (ALI NAZARi)  ");
+});
+
 app.post("/books", async (req, res) => {
   try {
     if (!req.body.title || !req.body.author || !req.body.publishYear) {
@@ -33,9 +37,14 @@ app.post("/books", async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
-  console.log(req);
-  return res.status(234).send("WElCOM to my Project (ALI NAZARi)  ");
+app.get("/books", async (req, res) => {
+  try {
+    const books = await Book.find();
+    res.status(201).send({ count: books.length, data: books });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error });
+  }
 });
 
 mongoose

@@ -53,7 +53,7 @@ const Home = () => {
                   {book.author}
                 </td>
                 <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
-                  {book.PublishYear}
+                  {book.publishYear}
                 </td>
                 <td className='border border-slate-700 rounded-md text-center'>
                   <div className='flex justify-center gap-x-4'>

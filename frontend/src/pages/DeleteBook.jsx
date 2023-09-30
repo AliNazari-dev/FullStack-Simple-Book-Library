@@ -22,8 +22,7 @@ const DeleteBook = () => {
       })
       .catch((error) => {
         setLoading(false);
-        // alert('An error happened. Please Chack console');
-        enqueueSnackbar('Error', { variant: 'error' });
+        enqueueSnackbar('Error', { variant: 'error',autoHideDuration:2000 });
         console.log(error);
       });
   };

@@ -17,6 +17,30 @@ app.get("/", (req, res) => {
   return res.status(234).send("WElCOM to my Project (ALI NAZARi)  ");
 });
 
+//GetAll books Route
+app.get("/books", async (req, res) => {
+  try {
+    const books = await Book.find();
+    return res.status(201).json({ count: books.length, data: books });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error });
+  }
+});
+
+//Get one books Route
+app.get("/books/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const book = await Book.findById(id);
+    return res.status(201).json(book);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error });
+  }
+});
+
+//create new Book Route
 app.post("/books", async (req, res) => {
   try {
     if (!req.body.title || !req.body.author || !req.body.publishYear) {
@@ -36,23 +60,21 @@ app.post("/books", async (req, res) => {
     res.status(500).send({ message: error });
   }
 });
-//GetAll books Route
-app.get("/books", async (req, res) => {
-  try {
-    const books = await Book.find();
-    return res.status(201).json({ count: books.length, data: books });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ message: error });
-  }
-});
 
-//Get one books Route
-app.get("/books/:id", async (req, res) => {
+//Update books Route
+app.put("/books/:id", async (req, res) => {
   try {
+    if (!req.body.title || !req.body.author || !req.body.publishYear) {
+      return res
+        .status(400)
+        .send({ message: "All field Required ( title , author , publishYear )" });
+    }
     const { id } = req.params;
-    const book = await Book.findById(id);
-    return res.status(201).json(book);
+    const result = await Book.findByIdAndUpdate(id, req.body);
+    if (!result) {
+      return res.status(404).json({ message: "Book not Found" });
+    }
+    return res.status(200).send({ message: "Book Updated Succsesfully" });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: error });

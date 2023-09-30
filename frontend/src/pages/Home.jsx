@@ -26,7 +26,7 @@ const Home = () => {
     <div className='p-4'>
       <div className='flex justify-between items-center'>
         <h1 className='text-3xl my-8'>
-          <Link>
+          <Link to={"/books/create"}>
             <MdOutlineAddBox className='text-sky-600' />
           </Link>
         </h1>

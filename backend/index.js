@@ -7,13 +7,17 @@ import cors from "cors";
 const app = express();
 
 //cors Policy
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
+//option 1
+app.use(cors());
+
+//option 2
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: ["Content-Type"],
+//   })
+// );
 
 //Middleware for parcing request body
 app.use(express.json());

@@ -30,17 +30,29 @@ app.post("/books", async (req, res) => {
       publishYear: req.body.publishYear,
     };
     const book = await Book.create(newBook);
-    res.status(201).send({ book });
+    return res.status(201).json({ book });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: error });
+  }
+});
+//GetAll books Route
+app.get("/books", async (req, res) => {
+  try {
+    const books = await Book.find();
+    return res.status(201).json({ count: books.length, data: books });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: error });
   }
 });
 
-app.get("/books", async (req, res) => {
+//Get one books Route
+app.get("/books/:id", async (req, res) => {
   try {
-    const books = await Book.find();
-    res.status(201).send({ count: books.length, data: books });
+    const { id } = req.params;
+    const book = await Book.findById(id);
+    return res.status(201).json(book);
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: error });
